@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vall Mini Games</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #1a1a2e;
+      color: #eee;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      color: #fff;
+    }
+    .games {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+    .games a {
+      display: block;
+      padding: 1.25rem 2rem;
+      background: #16213e;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 500;
+      border: 1px solid #0f3460;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .games a:hover {
+      background: #0f3460;
+      transform: translateY(-2px);
+    }
+    .games a.disabled {
+      opacity: 0.6;
+      pointer-events: none;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <h1>Vall Mini Games</h1>
+  <nav class="games" aria-label="Elige un juego">
+    <a href="puzzle-fotos/">1. Puzzle Fotos</a>
+    <a href="juego-2/" class="disabled" aria-disabled="true">2. Próximamente</a>
+  </nav>
+</body>
+</html>
