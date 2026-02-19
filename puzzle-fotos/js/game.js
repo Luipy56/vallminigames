@@ -11,8 +11,28 @@
   const TOTAL = ROWS * COLS;
   const IMAGE_NAME_PATTERN = 'img'; // img1.png, img2.png, ...
   const IMAGE_MAX_PROBE = 100;      // deja de probar tras N intentos
+  const USED_IMAGES_KEY = 'puzzle-fotos-used';
 
   let imageList = []; // lista descubierta dinámicamente
+
+  function getUsedImages() {
+    try {
+      var raw = localStorage.getItem(USED_IMAGES_KEY);
+      if (!raw) return [];
+      var arr = JSON.parse(raw);
+      return Array.isArray(arr) ? arr : [];
+    } catch (_) { return []; }
+  }
+
+  function markImageAsUsed(filename) {
+    var used = getUsedImages();
+    if (used.indexOf(filename) === -1) used.push(filename);
+    if (used.length >= imageList.length) {
+      localStorage.removeItem(USED_IMAGES_KEY);
+    } else {
+      localStorage.setItem(USED_IMAGES_KEY, JSON.stringify(used));
+    }
+  }
 
   const board = document.getElementById('board');
   const piecesWrap = document.getElementById('piecesWrap');
@@ -34,7 +54,10 @@
 
   function pickRandomImage() {
     if (imageList.length === 0) return null;
-    return imageList[Math.floor(Math.random() * imageList.length)];
+    var used = getUsedImages();
+    var available = imageList.filter(function (name) { return used.indexOf(name) === -1; });
+    if (available.length === 0) available = imageList;
+    return available[Math.floor(Math.random() * available.length)];
   }
 
   /** Descubre imágenes: primero intenta manifest.json; si no existe, prueba img1.png, img2.png, ... */
@@ -258,6 +281,7 @@
     var img = new Image();
     img.onload = function () {
       currentImageUrl = img.src;
+      markImageAsUsed(filename);
       if (boardBg) {
         boardBg.style.backgroundImage = 'url(' + currentImageUrl + ')';
       }
