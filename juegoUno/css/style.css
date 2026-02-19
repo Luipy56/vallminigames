@@ -1,0 +1,381 @@
+/* Puzzle 2x4 — Estética limpia y accesible para personas mayores. */
+
+:root {
+  --bg: #e8e0d6;
+  --surface: #fff;
+  --border: #c4b8a8;
+  --text: #2c2c2c;
+  --primary: #5a7a6a;
+  --primary-hover: #4a6a5a;
+  --accent: #da8c1f;
+  --accent-hover: #c47a14;
+  --accent-soft: rgba(201, 118, 46, 0.15);
+  --shadow: rgba(0,0,0,0.08);
+  --shadow-soft: rgba(0,0,0,0.05);
+  --slot-size: min(22vw, 170px);
+  --board-gap: calc(var(--slot-size) * 0.04);
+  --pair-gap: calc(var(--slot-size) / 2);
+  --layout-gap: calc(var(--slot-size) / 2);
+  --lateral-center-offset: calc(2.5 * var(--slot-size) + 1.5 * var(--board-gap) + var(--layout-gap));
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 20px;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+  background-image:
+    radial-gradient(circle, rgba(140, 115, 95, 0.28) 1.2px, transparent 1.2px),
+    radial-gradient(ellipse 100% 70% at 20% 20%, rgba(200, 120, 50, 0.18) 0%, transparent 50%),
+    radial-gradient(ellipse 90% 60% at 85% 85%, rgba(70, 95, 80, 0.14) 0%, transparent 50%),
+    linear-gradient(180deg, #f2ebe2 0%, #e4dcd0 45%, #d8cec0 100%);
+  background-size: 28px 28px, 100% 100%, 100% 100%, 100% 100%;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 1.25rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: linear-gradient(145deg, rgba(252, 248, 243, 0.85) 0%, rgba(242, 236, 228, 0.75) 100%);
+  border-radius: 16px;
+  box-shadow:
+    0 0 0 1px rgba(140, 118, 95, 0.25),
+    0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+.app::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(160, 140, 115, 0.45);
+  border-radius: 10px;
+  pointer-events: none;
+}
+
+.game-box .btn-back {
+  position: absolute;
+  top: 0.85rem;
+  left: 0.85rem;
+  z-index: 10;
+}
+
+.game-box .btn-change-image {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  z-index: 10;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 0;
+}
+
+.game-box {
+  position: relative;
+  /* Solo contenedor para centrar; sin estilos visibles */
+}
+
+/* Layout: piezas arriba, izquierda, derecha, abajo; tablero en el centro */
+.game-layout {
+  display: grid;
+  grid-template-columns: var(--slot-size) calc(4 * var(--slot-size) + 3 * var(--board-gap)) var(--slot-size);
+  grid-template-rows: var(--slot-size) calc(2 * var(--slot-size) + var(--board-gap)) var(--slot-size);
+  grid-template-areas:
+    ".         top-pieces ."
+    "left-pieces board    right-pieces"
+    ".         bottom-pieces .";
+  gap: var(--layout-gap);
+  align-items: center;
+  justify-items: center;
+}
+
+.pieces-top {
+  grid-area: top-pieces;
+  display: grid;
+  grid-template-columns: var(--slot-size) var(--slot-size);
+  gap: var(--pair-gap);
+  justify-content: center;
+}
+
+.pieces-left {
+  grid-area: left-pieces;
+  display: grid;
+  grid-template-rows: var(--slot-size) var(--slot-size);
+  gap: var(--pair-gap);
+  justify-content: center;
+}
+
+.pieces-right {
+  grid-area: right-pieces;
+  display: grid;
+  grid-template-rows: var(--slot-size) var(--slot-size);
+  gap: var(--pair-gap);
+  justify-content: center;
+}
+
+.pieces-bottom {
+  grid-area: bottom-pieces;
+  display: grid;
+  grid-template-columns: var(--slot-size) var(--slot-size);
+  gap: var(--pair-gap);
+  justify-content: center;
+}
+
+/* Board: 2 rows x 4 columns con marco */
+.board {
+  grid-area: board;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, var(--slot-size));
+  grid-template-rows: repeat(2, var(--slot-size));
+  gap: var(--board-gap);
+  padding: var(--board-gap);
+  border-radius: 12px;
+  background: var(--border);
+  border: 6px solid #a08b6e;
+  box-shadow:
+    0 0 0 2px rgba(160, 139, 110, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 6px 20px rgba(0, 0, 0, 0.12),
+    0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+/* Imagen de fondo con baja opacidad como guía (se ve a través de los slots) */
+.board-bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.45;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.6s ease;
+}
+
+.board .slot {
+  z-index: 1;
+}
+
+.slot {
+  width: var(--slot-size);
+  height: var(--slot-size);
+  background: rgba(255, 255, 255, 0.5);
+  border: 3px dashed var(--border);
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  transition: opacity 0.5s ease;
+}
+
+.slot.drag-over {
+  border-color: var(--accent);
+  border-width: 3px;
+  background: var(--accent-soft);
+}
+
+.slot.filled {
+  border-style: solid;
+  border-color: var(--border);
+}
+
+.slot .piece {
+  position: absolute;
+  inset: 0;
+  background-size: 400% 200%;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+
+/* Animación de victoria: grid y piezas desaparecen, imagen nítida */
+.game-box.victory .board .slot {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.game-box.victory .board-bg {
+  opacity: 1;
+}
+
+.game-box.victory .game-layout .piece {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Piezas alrededor del tablero (todas las zonas) */
+.game-layout .piece {
+  width: var(--slot-size);
+  height: var(--slot-size);
+  background-size: 400% 200%;
+  background-repeat: no-repeat;
+  background-color: var(--surface);
+  border: 3px solid var(--border);
+  border-radius: 6px;
+  cursor: grab;
+  box-shadow: 0 2px 6px var(--shadow-soft);
+  user-select: none;
+  transition: opacity 0.5s ease;
+}
+
+.game-layout .piece:active {
+  cursor: grabbing;
+}
+
+.game-layout .piece.dragging {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Ghost que sigue el cursor al arrastrar con el ratón */
+.piece-ghost {
+  position: fixed;
+  width: var(--slot-size);
+  height: var(--slot-size);
+  background-size: 400% 200%;
+  background-repeat: no-repeat;
+  background-color: var(--surface);
+  pointer-events: none;
+  z-index: 1000;
+  border: 3px solid var(--accent);
+  border-radius: 6px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+/* Buttons — texto grande para legibilidad */
+.btn {
+  padding: 0.65rem 1.2rem;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+
+.btn-primary:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Botón principal del modal: naranja (accent) para coherencia con la app */
+.modal-actions .btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.modal-actions .btn-primary:hover {
+  background: var(--accent-hover);
+}
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--text);
+  border: 2px solid var(--border);
+  font-size: 1.1rem;
+}
+
+.btn-secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn-back {
+  background: var(--surface);
+  color: var(--text);
+  border: 2px solid var(--border);
+}
+
+.btn-back:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn-change-image {
+  background: var(--surface);
+  color: var(--text);
+  border: 2px solid var(--border);
+}
+
+.btn-change-image:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Modal — legible, limpio, coherente con la app */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1.5rem;
+}
+
+.modal-overlay[hidden] {
+  display: none;
+}
+
+.modal {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 1.5rem 1.75rem;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  border: none;
+  border-top: 4px solid var(--accent);
+}
+
+.modal-title {
+  margin: 0 0 0.9rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.modal-text {
+  margin: 0 0 1.15rem;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-actions .btn {
+  min-width: 140px;
+  padding: 0.65rem 1.2rem;
+  font-size: 1.1rem;
+}
+

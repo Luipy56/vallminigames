@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Puzzle de fotos — Completa la imagen</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app">
+    <main class="main">
+      <div class="game-box">
+        <button type="button" class="btn btn-back" id="backBtn" aria-label="Volver atrás">Volver</button>
+        <button type="button" class="btn btn-change-image" id="changeImageBtn" aria-label="Cambiar Foto">Cambiar Foto</button>
+        <div class="game-layout" id="piecesWrap" aria-label="Puzzle y piezas">
+        <div class="pieces-top" id="piecesTop" aria-label="Piezas arriba"></div>
+        <div class="pieces-left" id="piecesLeft" aria-label="Piezas a la izquierda"></div>
+        <section class="board" id="board" aria-label="Zona del puzzle">
+          <div class="board-bg" id="boardBg" aria-hidden="true"></div>
+          <!-- 2x4 drop slots, filled by JS -->
+        </section>
+        <div class="pieces-right" id="piecesRight" aria-label="Piezas a la derecha"></div>
+        <div class="pieces-bottom" id="piecesBottom" aria-label="Piezas abajo"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal layer: no alerts, always modals -->
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+    <div class="modal" id="modal">
+      <h2 class="modal-title" id="modalTitle"></h2>
+      <p class="modal-text" id="modalText"></p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-primary" id="modalBtn">Aceptar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/game.js"></script>
+</body>
+</html>
