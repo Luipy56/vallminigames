@@ -188,24 +188,29 @@
     el.className = 'memori-card';
     el.dataset.index = String(index);
     el.setAttribute('aria-label', 'Carta ' + (index + 1));
+    var inner = document.createElement('div');
+    inner.className = 'memori-card-inner';
     var back = document.createElement('div');
     back.className = 'card-back';
-    el.appendChild(back);
+    var front = document.createElement('div');
+    front.className = 'card-front';
+    inner.appendChild(back);
+    inner.appendChild(front);
+    el.appendChild(inner);
     el.addEventListener('click', function () { onCardClick(index); });
     return el;
   }
 
   function setCardFace(el, imageUrl, show) {
+    var front = el.querySelector('.card-front');
     if (show) {
-      el.style.backgroundImage = 'url(' + imageUrl + ')';
+      front.style.backgroundImage = 'url(' + imageUrl + ')';
       el.classList.add('flipped');
-      el.innerHTML = '';
     } else {
-      el.style.backgroundImage = '';
       el.classList.remove('flipped');
-      var back = document.createElement('div');
-      back.className = 'card-back';
-      el.appendChild(back);
+      setTimeout(function () {
+        front.style.backgroundImage = '';
+      }, 400);
     }
   }
 

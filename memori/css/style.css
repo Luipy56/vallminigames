@@ -98,13 +98,13 @@ body {
   height: var(--card-size);
   border-radius: 10px;
   border: 3px solid var(--border);
-  background: var(--surface);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  padding: 0;
   cursor: pointer;
   box-shadow: 0 2px 8px var(--shadow-soft);
   transition: transform 0.2s ease, border-color 0.2s;
+  perspective: 640px;
+  overflow: hidden;
+  background: transparent;
 }
 
 .memori-card:hover:not(.matched):not(.flipped) {
@@ -122,13 +122,44 @@ body {
   cursor: default;
 }
 
-.memori-card .card-back {
+.memori-card-inner {
+  position: relative;
   width: 100%;
   height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease;
+}
+
+.memori-card.flipped .memori-card-inner {
+  transform: rotateY(180deg);
+}
+
+.memori-card .card-back,
+.memori-card .card-front {
+  position: absolute;
+  inset: 0;
   border-radius: 7px;
-  background: linear-gradient(145deg, #f0ddd4 0%, #e9d0c8 100%);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.memori-card .card-back {
+  background:
+    linear-gradient(90deg,
+      rgba(255,255,255,0.85) 0%,
+      rgba(255,255,255,0.85) 6%,
+      transparent 6%,
+      transparent 94%,
+      rgba(255,255,255,0.85) 94%,
+      rgba(255,255,255,0.85) 100%),
+    linear-gradient(145deg, #f0ddd4 0%, #e9d0c8 100%);
   background-size: 100% 100%;
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.35);
+}
+
+.memori-card .card-front {
+  transform: rotateY(180deg);
+  background: var(--surface) center / cover no-repeat;
 }
 
 /* Modal de dibujo */
