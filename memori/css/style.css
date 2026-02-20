@@ -296,3 +296,21 @@ body {
   border-color: var(--accent);
   color: var(--accent);
 }
+
+.watermark {
+  position: relative;
+  margin-top: auto;
+  padding: 0.4rem;
+  font-size: 0.7rem;
+  color: var(--border);
+  text-align: center;
+}
+
+.watermark a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.watermark a:hover {
+  text-decoration: underline;
+}
