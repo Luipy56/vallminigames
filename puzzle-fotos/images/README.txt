@@ -1,4 +1,4 @@
 Coloca aquí las imágenes para el puzzle.
 
-* Nombres img1.png, img2.png, img3.png, … (el juego las descubre solo).
-* Formato: PNG. Ratio recomendado: 16:9.
+* Nombres img1.jpg, img2.jpg, img3.jpg, … (el juego las descubre solo).
+* Formato: JPG. Ratio recomendado: 16:9.
