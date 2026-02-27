@@ -3,15 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Minijuegos: Puzzle Fotos y Memori. Vall Mini Games por LdeLuipy.">
+  <link rel="canonical" href="https://vmg.ldeluipy.es/">
   <title>Vall Mini Games</title>
   <style>
+    :root {
+      --vmg-bg: #1a1a2e;
+      --vmg-surface: #16213e;
+      --vmg-surface-hover: #0f3460;
+      --vmg-text: #eee;
+      --vmg-text-bright: #fff;
+      --vmg-muted: #666;
+      --vmg-border: #0f3460;
+      --vmg-radius: 12px;
+      --vmg-font: system-ui, -apple-system, sans-serif;
+    }
     * { box-sizing: border-box; }
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: system-ui, -apple-system, sans-serif;
-      background: #1a1a2e;
-      color: #eee;
+      font-family: var(--vmg-font);
+      background: var(--vmg-bg);
+      color: var(--vmg-text);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -22,7 +35,7 @@
       font-size: 1.75rem;
       font-weight: 600;
       margin-bottom: 2rem;
-      color: #fff;
+      color: var(--vmg-text-bright);
     }
     .games {
       display: flex;
@@ -33,16 +46,16 @@
     .games a {
       display: block;
       padding: 1.25rem 2rem;
-      background: #16213e;
-      color: #fff;
+      background: var(--vmg-surface);
+      color: var(--vmg-text-bright);
       text-decoration: none;
-      border-radius: 12px;
+      border-radius: var(--vmg-radius);
       font-weight: 500;
-      border: 1px solid #0f3460;
+      border: 1px solid var(--vmg-border);
       transition: background 0.2s, transform 0.15s;
     }
     .games a:hover {
-      background: #0f3460;
+      background: var(--vmg-surface-hover);
       transform: translateY(-2px);
     }
     .games a.disabled {
@@ -55,7 +68,7 @@
       margin-top: auto;
       padding: 0.4rem;
       font-size: 0.7rem;
-      color: #666;
+      color: var(--vmg-muted);
       text-align: center;
     }
     .watermark a {
